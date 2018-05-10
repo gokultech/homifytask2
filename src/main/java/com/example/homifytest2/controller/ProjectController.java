@@ -56,10 +56,16 @@ public class ProjectController {
     @DeleteMapping("/projects/{id}")
     public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long projectId) {
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", projectId));
+                .orElseThrow(() -> new ResourceNotFoundException("Project", "id", projectId));
 
         projectRepository.delete(project);
 
         return ResponseEntity.ok().build();
+    }
+    
+    // get all projects of professionals
+    @GetMapping("/projects")
+    public List<Project> getAllProjects() {
+        return projectRepository.findAll();
     }
 }
