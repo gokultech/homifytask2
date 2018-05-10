@@ -16,9 +16,10 @@ package com.example.homifytest2.model;
 
 		}
 
-		public Owner(String displayname, String phone, String email, String website, String city, String country ) 
+		public Owner(String id,String displayname, String phone, String email, String website, String city, String country ) 
 		{
-			super();
+			super(); 
+			this.id          =id;  
 			this.displayname = displayname;
 			this.phone       = phone;
 			this.email       = email;

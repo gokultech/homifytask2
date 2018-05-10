@@ -16,19 +16,20 @@ public class ProjectController {
     @Autowired
     ProjectRepository projectRepository;
 
- 
-
     // Create a new project
-    @PostMapping("/projects")
+    @PostMapping("/projects/owners")
     public Project createProject(@Valid @RequestBody Project project) {
        
     	return projectRepository.save(project);
     }
+    
     // Get a Single project
     
-    @GetMapping("/projects/{id}")
-    public Project getProjectById(@PathVariable(value = "id") Long projectId) {
-        return projectRepository.findById(projectId)
+    @GetMapping("/projects/{id}/owners")
+    public Project getProjectById(@PathVariable(value = "id") Long projectId ,Long ownerId)
+    {
+        return projectRepository.findAll(projectId, ownerId)
+        		
         .orElseThrow(() -> new ResourceNotFoundException("Project", "id", projectId));
     }
     // Update a project
@@ -53,10 +54,11 @@ public class ProjectController {
     }
 
     // Delete a Project
-    @DeleteMapping("/projects/{id}")
-    public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long projectId) {
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ResourceNotFoundException("Project", "id", projectId));
+    @DeleteMapping("/projects/{id}/courses")
+    public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long projectId, Long courseId) 
+    {
+        Project project = projectRepository.findAll(projectId,courseId)
+        .orElseThrow(() -> new ResourceNotFoundException("Project", "id", projectId));
 
         projectRepository.delete(project);
 
@@ -64,7 +66,8 @@ public class ProjectController {
     }
     
     // get all projects of professionals
-    @GetMapping("/projects")
+    
+    @GetMapping("/projects/courses")
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
